@@ -35,8 +35,41 @@ Analyze the unusual data from the engineers. How many reports are safe?
 
 """
 
+from typing import List
+
 from aoc_2024.utils import load_input
+
+
+def part_1(input_list: List[str]) -> int:
+    num_safe_reports = 0
+    for report in input_list:
+        report_list = [int(level) for level in report.split(" ")]
+
+        ascending = True if report_list[0] < report_list[1] else False
+
+        safe = True
+        if not ascending:
+            report_list = list(reversed(report_list))
+
+        for i in range(0, len(report_list) - 1):
+            if report_list[i] >= report_list[i + 1]:
+                safe = False
+                break
+            diff = report_list[i + 1] - report_list[i]
+            if diff > 3 or diff < 1:
+                safe = False
+                break
+        if safe:
+            num_safe_reports += 1
+
+    return num_safe_reports
 
 
 def main():
     input_list = load_input()
+    part_1_answer = part_1(input_list)
+    print(f"Part 1 result: {part_1_answer}")
+
+
+if __name__ == "__main__":
+    main()
