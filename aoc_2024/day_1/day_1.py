@@ -63,14 +63,12 @@ In the example above, this is 2 + 1 + 0 + 1 + 2 + 5, a total distance of 11!
 
 Your actual left and right lists contain many location IDs. What is the total distance between your lists?
 """
+
 from collections import defaultdict
 from typing import List
 
+from aoc_2024.utils import load_input
 
-
-def load_input() -> List[str]:
-    with open("input.txt") as file:
-        return file.read().strip().split("\n")
 
 def part_1_naive(input_list: List[str]) -> int:
     left_list = []
@@ -129,7 +127,9 @@ The last number, 3, appears in the right list three times; the similarity score 
 So, for these example lists, the similarity score at the end of this process is 31 (9 + 4 + 0 + 0 + 9 + 9).
 
 Once again consider your left and right lists. What is their similarity score?"""
-def part_2(input_list:List[str]) -> int:
+
+
+def part_2(input_list: List[str]) -> int:
     left_list: List[int] = []
     right_dict: defaultdict[int, int] = defaultdict(int)
 
@@ -147,11 +147,12 @@ def part_2(input_list:List[str]) -> int:
 
     return total
 
+
 def main() -> None:
     input_list = load_input()
     print(f"Part 1 Result: {part_1_naive(input_list)}")
     print(f"Part 2 Result: {part_2(input_list)}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
