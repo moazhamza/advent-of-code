@@ -37,6 +37,32 @@ S.S.S.S.SS
 ..M.M.M.MM
 .X.X.XMASX
 Take a look at the little Elf's word search. How many times does XMAS appear?
+
+--- Part Two ---
+The Elf looks quizzically at you. Did you misunderstand the assignment?
+
+Looking for the instructions, you flip over the word search to find that this isn't actually an XMAS puzzle; it's an X-MAS puzzle in which you're supposed to find two MAS in the shape of an X. One way to achieve that is like this:
+
+M.S
+.A.
+M.S
+Irrelevant characters have again been replaced with . in the above diagram. Within the X, each MAS can be written forwards or backwards.
+
+Here's the same example from before, but this time all of the X-MASes have been kept instead:
+
+.M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........
+In this example, an X-MAS appears 9 times.
+
+Flip the word search from the instructions back over to the word search side and try again. How many times does an X-MAS appear?
 """
 
 import dataclasses
@@ -52,9 +78,10 @@ class Index:
 
 RANGE_OF_IDXS_T = list[tuple[int, int]]
 SEARCH_IDX_T = list[RANGE_OF_IDXS_T]
+INPUT_MATRIX_T = list[list[str]]
 
 
-def indices(start_x: int, start_y: int) -> SEARCH_IDX_T:
+def crossword_indices(start_x: int, start_y: int) -> SEARCH_IDX_T:
     """Search indices"""
     return [
         # Horizontal
@@ -72,7 +99,7 @@ def indices(start_x: int, start_y: int) -> SEARCH_IDX_T:
 
 
 def _retrieve_text_for_range(
-    input_matrix: list[list[str]], range_of_idxs: RANGE_OF_IDXS_T
+    input_matrix: INPUT_MATRIX_T, range_of_idxs: RANGE_OF_IDXS_T
 ) -> str:
     try:
         text_list = [
@@ -88,7 +115,7 @@ def part_1(input_matrix: list[list[str]]) -> int:
     for i, row in enumerate(input_matrix):
         for j, col in enumerate(row):
             if col == "X":
-                idxs_to_search = indices(i, j)
+                idxs_to_search = crossword_indices(i, j)
                 for _range in idxs_to_search:
                     text = _retrieve_text_for_range(input_matrix, _range)
                     if text == "XMAS":
@@ -97,8 +124,30 @@ def part_1(input_matrix: list[list[str]]) -> int:
     return total_xmases
 
 
-def part_2(input_text: list[list[str]]) -> int:
-    pass
+GOOD_MAS = {"MAS", "SAM"}
+
+
+def indices_x(
+    input_matrix: INPUT_MATRIX_T, start_x: int, start_y: int
+) -> tuple[str, str]:
+    crosses = [
+        [(start_x - 1, start_y - 1), (start_x, start_y), (start_x + 1, start_y + 1)],
+        [(start_x + 1, start_y - 1), (start_x, start_y), (start_x - 1, start_y + 1)],
+    ]
+    texts = [_retrieve_text_for_range(input_matrix, _range) for _range in crosses]
+    return texts[0], texts[1]
+
+
+def part_2(input_matrix: list[list[str]]) -> int:
+    total_x_mases = 0
+    for i, row in enumerate(input_matrix):
+        for j, col in enumerate(row):
+            if col == "A":
+                text_a, text_b = indices_x(input_matrix, i, j)
+                if text_a in GOOD_MAS and text_b in GOOD_MAS:
+                    total_x_mases += 1
+
+    return total_x_mases
 
 
 def main():
@@ -110,7 +159,7 @@ def main():
     part_1_answer = part_1(input_matrix)
     print(f"Part 1 result: {part_1_answer}")
 
-    part_2_answer = part_2(input_list)
+    part_2_answer = part_2(input_matrix)
     print(f"Part 2 result: {part_2_answer}")
 
 
