@@ -149,7 +149,9 @@ def part_2(input_list: List[str]) -> int:
 
 
 def main() -> None:
-    input_list = load_input()
+    raw_input = load_input()
+    input_list = raw_input.split("\n")
+
     print(f"Part 1 Result: {part_1_naive(input_list)}")
     print(f"Part 2 Result: {part_2(input_list)}")
 

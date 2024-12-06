@@ -48,11 +48,11 @@ def part_2(code_text: str) -> int:
 
 
 def main():
-    input_list = load_input()
-    part_1_answer = part_1("\n".join(input_list))
+    raw_input = load_input()
+    part_1_answer = part_1(raw_input)
     print(f"Part 1 result: {part_1_answer}")
 
-    part_2_answer = part_2("\n".join(input_list))
+    part_2_answer = part_2(raw_input)
     print(f"Part 2 result: {part_2_answer}")
 
 

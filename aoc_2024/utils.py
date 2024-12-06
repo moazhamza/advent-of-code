@@ -1,6 +1,6 @@
 from typing import List
 
 
-def load_input() -> List[str]:
+def load_input() -> str:
     with open("input.txt") as file:
-        return file.read().strip().split("\n")
+        return file.read().strip()

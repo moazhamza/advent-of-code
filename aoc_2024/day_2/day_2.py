@@ -161,7 +161,8 @@ def part_2(input_list: List[str]) -> int:
 
 
 def main():
-    input_list = load_input()
+    raw_input = load_input()
+    input_list = raw_input.split("\n")
     part_1_answer = part_1(input_list)
     print(f"Part 1 result: {part_1_answer}")
     part_1_updated_answer = part_1_updated(input_list)
