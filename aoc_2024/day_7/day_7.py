@@ -130,7 +130,7 @@ def part_2(raw_input: str) -> int:
 
     futures = []
     with tqdm(total=len(list_of_equations)) as pbar:
-        with ProcessPoolExecutor(1) as executor:
+        with ProcessPoolExecutor() as executor:
             for equation in list_of_equations:
                 split_eq = equation.split(": ")
                 total = int(split_eq[0])
