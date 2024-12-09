@@ -330,9 +330,6 @@ def part_2(raw_input: str) -> int:
     return len([x.result() for x in futures if x.result() is True])
 
 
-"1:27:30"
-
-
 def main():
     raw_input = load_input()
     # raw_input = example_input
