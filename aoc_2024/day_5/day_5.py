@@ -89,6 +89,7 @@ Find the updates which are not in the correct order. What do you get if you add 
 """
 
 import dataclasses
+import time
 from collections import defaultdict
 from typing import Dict, List
 
@@ -181,11 +182,18 @@ def part_2(raw_input: str) -> int:
 def main():
     raw_input = load_input()
     # raw_input = example_input
+
+    start_time = time.time()
     part_1_answer = part_1(raw_input)
     print(f"Part 1 result: {part_1_answer}")
+    end_time = time.time()
+    print(f"Part 1 time: {end_time - start_time:.4f} seconds\n")
 
+    start_time = time.time()
     part_2_answer = part_2(raw_input)
     print(f"Part 2 result: {part_2_answer}")
+    end_time = time.time()
+    print(f"Part 2 time: {end_time - start_time:.4f} seconds")
 
 
 if __name__ == "__main__":
